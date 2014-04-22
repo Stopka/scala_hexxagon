@@ -1,0 +1,81 @@
+package controllers
+
+import play.api._
+import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
+
+object Application extends Controller {
+
+  def index = Action {
+    request =>
+      request.session.get("user").map { user =>
+        val id=models.Games.add(user)
+        Redirect(routes.Application.invite(id))
+      }.getOrElse {
+        val user=models.Users.add()
+        val id=models.Games.add(user)
+        Redirect(routes.Application.invite(id)).withSession("user"->user)
+      }
+  }
+
+  def invite(gameId:String) = Action {
+    request =>
+      request.session.get("user").map { user =>
+        try {
+          val game = models.Games(gameId)
+          game.addUser(user)
+
+          if (game.arePlayersReady()) {
+            Redirect(routes.Application.board(gameId)).withSession("user" -> user)
+          } else {
+            Ok(views.html.invite(game, user))
+          }
+        }catch{
+          case e:NoSuchElementException=>Redirect(routes.Application.index())
+        }
+      }.getOrElse {
+        val user=models.Users.add()
+        Redirect(routes.Application.invite(gameId)).withSession("user"->user)
+      }
+  }
+
+  def board(gameId:String) = Action {
+    request =>
+      request.session.get("user").map { user =>
+        try {
+          val game = models.Games(gameId)
+          Ok(views.html.board(game,game.getPlayerNumber(user)))
+        }catch{
+          case e:NoSuchElementException=>Redirect(routes.Application.index())
+        }
+      }.getOrElse {
+        Redirect(routes.Application.index())
+      }
+  }
+
+  val coordinates = Form(
+    tuple(
+      "x" -> number,
+      "y" -> number
+    )
+  )
+
+  def click(gameId:String) = Action {
+    implicit request =>
+      request.session.get("user").map {
+        user =>
+          try {
+            val game = models.Games(gameId)
+            val (x, y)=coordinates.bindFromRequest.get
+            game.click(user,x,y)
+            Redirect(routes.Application.board(gameId)).withSession("user" -> user)
+          }catch{
+            case e:NoSuchElementException=>Redirect(routes.Application.index())
+          }
+      }.getOrElse {
+        Redirect(routes.Application.index())
+      }
+  }
+}
+

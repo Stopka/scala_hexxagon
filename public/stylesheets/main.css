@@ -1,0 +1,128 @@
+body{
+    background: url(http://1-ps.googleusercontent.com/h/www.dezignmatterz.com/wp-content/themes/DezignMatterz/images/xstripes_black.png.pagespeed.ic.t8179WnvAb.png) repeat;
+}
+
+code{
+    background-color: white;
+    border: 1px black solid;
+    padding: 5px 5px;
+    display: block;
+}
+
+h1 {
+    text-transform: capitalize;
+    font-size: 30px;
+    font-weight: 700;
+    -webkit-text-shadow: 1px 1px #fff, 2px 2px #2a2829;
+    text-shadow: 1px 1px white, 2px 2px #2A2829;
+}
+
+p.state.player_0{
+    color: blue;
+}
+p.state.player_1{
+    color: red;
+}
+
+.board{
+    background-color: darkgray;
+    border: 2px solid black;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+.board.player_0{
+    background-color: lightblue;
+}
+.board.player_1{
+    background-color: lightcoral;
+}
+
+.board .row{
+    margin: 0 auto;
+    padding: 0 21px 0 0;
+    border: none;
+    display: inline-block;
+}
+
+.board .row:nth-child(even){
+    padding: 0 0 0 23px;
+}
+
+.board .row *{
+    border:3px solid white;
+    -webkit-border-radius: 100%;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 0;
+    padding: 0 0;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+
+.board .field{
+    border:3px solid black;
+    width: 40px;
+    height: 40px;
+    background-color: lightgrey;
+    box-shadow: inset black 3px 3px 5px;
+}
+
+.board .field .player{
+
+}
+
+.board .field.player_0{
+    background-color: blue;
+}
+.board .field.player_1{
+    background-color: red;
+}
+
+.board .field.selected{
+    border-color: green;
+}
+
+.board .field.split{
+    border-color: orange;
+}
+
+.board .field.jump{
+    border-color: yellow;
+}
+
+.board a:hover{
+    border-style: dotted;
+    box-shadow: inset black 2px 2px 5px,white 0px 0px 10px;
+}
+.score span{
+    width: 15%;
+}
+.score .bar_frame{
+    background-color: darkgray;
+    border: inset 2px;
+    height: 20px;
+    font-weight: bold;
+}
+
+.score .bar{
+    display: inline-block;
+    text-align: center;
+    color: #ffffff;
+    background-color: darkgray;
+    height: 20px;
+    overflow: hidden;
+}
+.score .bar.player_0{
+    background-color: blue;
+}
+.score .bar.player_1{
+    background-color: red;
+}

@@ -1,0 +1,100 @@
+@(game:models.Game,user:Int)
+@main(game.isTimer(user)) {
+@if(user<0){
+<h2>Observer</h2>
+}else{
+<h2>Player @{user+1}</h2>
+}
+@if(game.isOver()){
+@if(game.getWinnerPlayer()<0){
+    <p class="state"><strong>Game over. No winner.</strong></p>
+}else{
+    <p class="state player_@game.getWinnerPlayer()"><strong>Player @{game.getWinnerPlayer()+1} wins.</strong></p>
+}
+}else{
+<p class="state player_@game.getPlays()">
+    @if(game.isOnTurn(user)){
+    <em>It's your turn!</em>
+    }else{
+    <strong>Waiting for player @{game.getPlays()+1}</strong>
+    }
+</p>
+}
+<form class="board player_@user" id="board_form" action="@routes.Application.click(game.id)" method="post">
+    <input type="hidden" name="x" value="-1" id="x">
+    <input type="hidden" name="y" value="-1" id="y">
+    @for((board_row,index) <-  game.getBoard().zipWithIndex) {
+    <div class="row">
+        @Html({
+        def fill(to:Int):String={
+            if(to>0){
+                fill(to-1).concat("<div> </div> ")
+            }else{
+                ""
+            }
+        }
+        fill(index/2)
+        })
+        @for((field,indey) <- board_row.zipWithIndex) {
+            @if(field==null) {
+                <div></div>
+            }else{
+                <@{
+                    if(game.isOnTurn(user)){
+                        "a href=javascript:click("+index+","+indey+")"
+                    }else{
+                        "div"
+                    }
+                }
+                        class="field @{
+                        val p=field.getPlayer()
+                        val class_p=if(p>=0){
+                            "player player_".concat(p.toString)
+                        }else{
+                            ""
+                        }
+                        class_p.concat(" ").concat({
+                            if(game.isOnTurn(user)){
+                            field.getMark match{
+                                case 0=>""
+                                case 1=>"selected"
+                                case 2=>"split"
+                                case 3=>"jump"
+                            }
+                            }else{
+                                ""
+                            }
+                        })
+                    }">
+                    @{
+                        val p=field.getPlayer()
+                        if(p>=0){
+                            p+1
+                        }else{
+                            ""
+                        }
+                    }
+                </@{
+                    if(game.isOnTurn(user)){
+                        "a"
+                    }else{
+                        "div"
+                    }
+                }>
+            }
+        }
+        @Html({
+            def fill(to:Int):String={
+                if(to>0){
+                    fill(to-1).concat("<div> </div> ")
+                }else{
+                    ""
+                }
+            }
+            fill((game.getBoard().length-index)/2)
+        })
+    </div>
+    }
+</form>
+<div class="score"><span>Score: </span><div class="bar_frame"><div class="bar player_0" style="width: @{(100*game.getScore(0))/game.getScore(-2)}%">1=@game.getScore(0)</div><div class="bar player_1" style="width: @{(100*game.getScore(1))/game.getScore()}%">2=@game.getScore(1)</div><div class="bar" style="width: @{(100*game.getScore(-1))/game.getScore()}%">?=@game.getScore(-1)</div></div></div>
+}
