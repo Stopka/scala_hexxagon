@@ -1,14 +1,15 @@
 @(game: models.Game,user:String)
 
 @main(true) {
-<p></p><strong>Waiting for other players...</strong></p>
+<div class="invite">
+<p><strong>Čekám na další hráče...</strong></p>
 <script>
     setTimeout(function(){
         window.location.reload(true);
     }, 5000);
 </script>
-<p>Invite a friend to game. Send him the link below.</p>
-<code>http://localhost:9000/game/@game.id</code>
-<p></p><em>Players connected: @game.countPlayers() / @game.getPlayersMax()</em></p>
-
+<p>Pozvi kamaráda nebo kamarádku do hry. Pošli níže uvedený odkaz.</p>
+<code>http://skorpils.cz:9000/game/@game.id</code>
+<p></p><em>Připojení hráči: @game.countPlayers() / @game.getPlayersMax()</em></p>
+</div>
 }

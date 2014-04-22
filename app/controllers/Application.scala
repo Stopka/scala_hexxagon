@@ -10,6 +10,7 @@ object Application extends Controller {
   def index = Action {
     request =>
       request.session.get("user").map { user =>
+        System.out.println("Index "+"user");
         val id=models.Games.add(user)
         Redirect(routes.Application.invite(id))
       }.getOrElse {
@@ -23,6 +24,7 @@ object Application extends Controller {
     request =>
       request.session.get("user").map { user =>
         try {
+          System.out.println("Board "+gameId+" "+"user");
           val game = models.Games(gameId)
           game.addUser(user)
 
@@ -44,6 +46,7 @@ object Application extends Controller {
     request =>
       request.session.get("user").map { user =>
         try {
+          System.out.println("Board "+gameId+" "+"user");
           val game = models.Games(gameId)
           Ok(views.html.board(game,game.getPlayerNumber(user)))
         }catch{
@@ -68,6 +71,7 @@ object Application extends Controller {
           try {
             val game = models.Games(gameId)
             val (x, y)=coordinates.bindFromRequest.get
+            System.out.println("Click "+gameId+" "+x+","+y+" "+"user");
             game.click(user,x,y)
             Redirect(routes.Application.board(gameId)).withSession("user" -> user)
           }catch{

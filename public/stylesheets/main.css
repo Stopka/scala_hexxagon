@@ -1,5 +1,5 @@
 body{
-    background: url(http://1-ps.googleusercontent.com/h/www.dezignmatterz.com/wp-content/themes/DezignMatterz/images/xstripes_black.png.pagespeed.ic.t8179WnvAb.png) repeat;
+    background: url(../images/bg.png) repeat;
 }
 
 code{
@@ -14,7 +14,23 @@ h1 {
     font-size: 30px;
     font-weight: 700;
     -webkit-text-shadow: 1px 1px #fff, 2px 2px #2a2829;
-    text-shadow: 1px 1px white, 2px 2px #2A2829;
+    text-shadow: 1px 1px white,-1px -1px white, 2px 2px #2A2829;
+    background: url(../images/logo.png) no-repeat 15px 5px ;
+    height: 100px;
+    line-height: 100px;
+    margin: 0 0;
+}
+
+h1 a{
+    text-decoration: none;
+    color: #000000;
+    display: block;
+    width: 100%;
+    height: 300px;
+}
+h1 a:hover{
+    text-decoration: none;
+    color: darkmagenta;
 }
 
 p.state.player_0{
@@ -23,19 +39,26 @@ p.state.player_0{
 p.state.player_1{
     color: red;
 }
+p.state.player_2{
+    color: green;
+}
 
-.board{
-    background-color: darkgray;
-    border: 2px solid black;
+.board,.invite{
+    background:  linear-gradient(transparent, darkgray);
+    border: 3px outset;
     padding: 10px 10px;
     text-align: center;
+    min-width: 780px;
 }
 
 .board.player_0{
-    background-color: lightblue;
+    background: linear-gradient(transparent, lightblue);
 }
 .board.player_1{
-    background-color: lightcoral;
+    background: linear-gradient(transparent, lightcoral);;
+}
+.board.player_2{
+    background: linear-gradient(transparent, lightgreen);;
 }
 
 .board .row{
@@ -50,7 +73,7 @@ p.state.player_1{
 }
 
 .board .row *{
-    border:3px solid white;
+    border:3px solid transparent;
     -webkit-border-radius: 100%;
     display: inline-block;
     width: 40px;
@@ -72,11 +95,12 @@ p.state.player_1{
     width: 40px;
     height: 40px;
     background-color: lightgrey;
-    box-shadow: inset black 3px 3px 5px;
+    box-shadow: inset black 2px 2px 5px,inset white -2px -2px 5px;
+    text-shadow: -1px -1px 2px #000000,1px 1px 2px #FFFFFF;
 }
 
-.board .field .player{
-
+.board .field.player{
+    box-shadow: inset black -2px -2px 5px,inset white 2px 2px 5px;
 }
 
 .board .field.player_0{
@@ -85,22 +109,29 @@ p.state.player_1{
 .board .field.player_1{
     background-color: red;
 }
+.board .field.player_2{
+    background-color: green;
+}
 
 .board .field.selected{
-    border-color: green;
+    border-color: white;
 }
 
 .board .field.split{
-    border-color: orange;
-}
-
-.board .field.jump{
     border-color: yellow;
 }
 
+.board .field.jump{
+    border-color: orange;
+}
+
 .board a:hover{
+     border-style: dotted;
+    box-shadow: inset black 2px 2px 5px,inset white -2px -2px 5px,white 0px 0px 15px;
+ }
+.board a.player:hover{
     border-style: dotted;
-    box-shadow: inset black 2px 2px 5px,white 0px 0px 10px;
+    box-shadow: inset black -2px -2px 5px,inset white 2px 2px 5px,white 0px 0px 15px;
 }
 .score span{
     width: 15%;
@@ -119,10 +150,15 @@ p.state.player_1{
     background-color: darkgray;
     height: 20px;
     overflow: hidden;
+    box-shadow: inset black -1px -1px 3px,inset white 1px 1px 3px;
+    text-shadow: -1px -1px 1px #000000,1px 1px 1px #FFFFFF;
 }
 .score .bar.player_0{
     background-color: blue;
 }
 .score .bar.player_1{
     background-color: red;
+}
+.score .bar.player_2{
+    background-color: green;
 }
