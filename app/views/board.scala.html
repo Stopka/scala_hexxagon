@@ -1,22 +1,22 @@
 @(game:models.Game,user:Int)
 @main(game.isTimer(user)) {
 @if(user<0){
-<h2>Pozorovatel</h2>
+<h2>@Messages("board.observer")</h2>
 }else{
-<h2>Hráč @{user+1}</h2>
+<h2>@Messages("board.player",user+1)</h2>
 }
 @if(game.isOver()){
 @if(game.getWinnerPlayer()<0){
-    <p class="state"><strong>Konec hry. Remíza.</strong></p>
+    <p class="state"><strong>@Messages("board.end.tie")</strong></p>
 }else{
-    <p class="state player_@game.getWinnerPlayer()"><strong>Player @{game.getWinnerPlayer()+1} wins.</strong></p>
+    <p class="state player_@game.getWinnerPlayer()"><strong>@Messages("board.end.winner",game.getWinnerPlayer()+1)</strong></p>
 }
 }else{
 <p class="state player_@game.getPlays()">
     @if(game.isOnTurn(user)){
-    <em>Jsi na tahu</em>
+    <em>@Messages("board.game.onturn")</em>
     }else{
-    <strong>Čekám na hráče @{game.getPlays()+1}</strong>
+    <strong>@Messages("board.game.waiting")</strong>
     }
 </p>
 }
@@ -96,5 +96,5 @@
     </div>
     }
 </form>
-<div class="score"><span>Skóre: </span><div class="bar_frame"><div class="bar player_0" style="width: @{(100*game.getScore(0))/game.getScore(-2)}%">1=@game.getScore(0)</div><div class="bar player_1" style="width: @{(100*game.getScore(1))/game.getScore()}%">2=@game.getScore(1)</div><div class="bar" style="width: @{(100*game.getScore(-1))/game.getScore()}%">?=@game.getScore(-1)</div></div></div>
+<div class="score"><span>@Messages("board.score"): </span><div class="bar_frame"><div class="bar player_0" style="width: @{(100*game.getScore(0))/game.getScore(-2)}%">1=@game.getScore(0)</div><div class="bar player_1" style="width: @{(100*game.getScore(1))/game.getScore()}%">2=@game.getScore(1)</div><div class="bar" style="width: @{(100*game.getScore(-1))/game.getScore()}%">?=@game.getScore(-1)</div></div></div>
 }

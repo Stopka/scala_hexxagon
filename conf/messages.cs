@@ -1,0 +1,11 @@
+title=Hexxagon
+invite.waiting=Čekám na další hráče...
+invite.message=Pozvi kamaráda nebo kamarádku do hry. Pošli níže uvedený odkaz.
+invite.connected=Připojení hráči
+board.observer=Pozorovatel
+board.player=Hráč %s
+board.end.tie=Konec hry. Remíza.
+board.end.winner=Vyhrál hráč %s
+board.game.onturn=Jsi na tahu
+board.game.waiting=Čekám na hráče %s
+board.score=Skóre

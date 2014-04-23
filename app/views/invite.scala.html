@@ -2,14 +2,9 @@
 
 @main(true) {
 <div class="invite">
-<p><strong>Čekám na další hráče...</strong></p>
-<script>
-    setTimeout(function(){
-        window.location.reload(true);
-    }, 5000);
-</script>
-<p>Pozvi kamaráda nebo kamarádku do hry. Pošli níže uvedený odkaz.</p>
-<code>http://skorpils.cz:9000/game/@game.id</code>
-<p></p><em>Připojení hráči: @game.countPlayers() / @game.getPlayersMax()</em></p>
+    <p><strong>@Messages("invite.waiting")</strong></p>
+    <p>@Messages("invite.message")</p>
+    <code>http://skorpils.cz:9000/game/@game.id</code>
+    <p><em>@Messages("invite.connected"): @game.countPlayers() / @game.getPlayersMax()</em></p>
 </div>
 }

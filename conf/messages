@@ -1,0 +1,11 @@
+title=Hexxagon
+invite.waiting=Waiting for other players...
+invite.message=Invite a friend. Send the link below.
+invite.connected=Connected players
+board.observer=Observer
+board.player=Player %s
+board.end.tie=Game over. Tie.
+board.end.winner=Player %s wins
+board.game.onturn=It's your turn
+board.game.waiting=Waiting for player %s
+board.score=Score
