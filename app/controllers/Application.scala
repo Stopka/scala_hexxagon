@@ -10,13 +10,34 @@ object Application extends Controller {
   def index = Action {
     request =>
       request.session.get("user").map { user =>
-        System.out.println("Index "+"user");
-        val id=models.Games.add(user)
-        Redirect(routes.Application.invite(id))
+        System.out.println("Index "+user);
+        //val id=models.Games.add(user)
+        Ok(views.html.index())
+        //Redirect(routes.Application.invite(id)).withSession("user"->user)
       }.getOrElse {
         val user=models.Users.add()
-        val id=models.Games.add(user)
-        Redirect(routes.Application.invite(id)).withSession("user"->user)
+        Redirect(routes.Application.index).withSession("user"->user)
+      }
+  }
+
+  def help = Action {
+    request =>
+      Ok(views.html.help())
+  }
+
+  def start(boardId:String) = Action {
+    request =>
+      request.session.get("user").map { user =>
+        try {
+          System.out.println("Start "+boardId+" "+user);
+          val id=models.Games.add(user,Integer.parseInt(boardId))
+          Redirect(routes.Application.invite(id)).withSession("user" -> user)
+        }catch{
+          case e:NoSuchElementException=>Redirect(routes.Application.index())
+        }
+      }.getOrElse {
+        val user=models.Users.add()
+        Redirect(routes.Application.index).withSession("user"->user)
       }
   }
 
@@ -24,7 +45,7 @@ object Application extends Controller {
     request =>
       request.session.get("user").map { user =>
         try {
-          System.out.println("Board "+gameId+" "+"user");
+          System.out.println("Board "+gameId+" "+user);
           val game = models.Games(gameId)
           game.addUser(user)
 
@@ -46,7 +67,7 @@ object Application extends Controller {
     request =>
       request.session.get("user").map { user =>
         try {
-          System.out.println("Board "+gameId+" "+"user");
+          System.out.println("Board "+gameId+" "+user);
           val game = models.Games(gameId)
           Ok(views.html.board(game,game.getPlayerNumber(user)))
         }catch{
@@ -71,7 +92,7 @@ object Application extends Controller {
           try {
             val game = models.Games(gameId)
             val (x, y)=coordinates.bindFromRequest.get
-            System.out.println("Click "+gameId+" "+x+","+y+" "+"user");
+            System.out.println("Click "+gameId+" "+x+","+y+" "+user);
             game.click(user,x,y)
             Redirect(routes.Application.board(gameId)).withSession("user" -> user)
           }catch{

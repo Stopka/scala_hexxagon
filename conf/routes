@@ -4,6 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /help                          controllers.Application.help
+GET     /start/:id                          controllers.Application.start(id)
 
 GET     /game/:id                          controllers.Application.invite(id)
 

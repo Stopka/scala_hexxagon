@@ -1,4 +1,6 @@
 title=Hexxagon
+index.header=Začít novou hru
+index.message=Vyber hrací desku ze seznamu níže a začni hrát.
 invite.waiting=Čekám na další hráče...
 invite.message=Pozvi kamaráda nebo kamarádku do hry. Pošli níže uvedený odkaz.
 invite.connected=Připojení hráči
@@ -9,3 +11,8 @@ board.end.winner=Vyhrál hráč {0}
 board.game.onturn=Jsi na tahu
 board.game.waiting=Čekám na hráče {0}
 board.score=Skóre
+help=Nápověda
+help.h=Vítejte v Hexxagonu!
+help.p1=Kliknutím zvolíte kámen, kterým chcete hrát. Na výběr se Vám zobrazí pole v nejbližším okruhu vybraného kamene (světle žlutá) a pole kolem tohoto nejbližšího okruhu (oranžová). Zvolením světle žlutého pole je na něj přidán další kámen Vaší barvy. Pokud zvolíte jedno z oranžových polí, Vámi původně vybraný kámen na toto pole přesouvá.
+help.p2=Kámen na novém poli barví všechny nepřátelské kameny v nejbližším okruhu na svou barvu. Vítězí ten hráč, který má po zaplnění herního plánu na ploše více kamenů své barvy. Výhra nastává také v případě, že protihráč přijde o všechny své kameny.
+help.p3=Hodně štěstí!

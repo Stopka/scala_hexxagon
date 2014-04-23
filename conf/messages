@@ -1,4 +1,6 @@
 title=Hexxagon
+index.header=Start new game
+index.message=Select a board below to start game.
 invite.waiting=Waiting for other players...
 invite.message=Invite a friend. Send the link below.
 invite.connected=Connected players
@@ -9,3 +11,8 @@ board.end.winner=Player {0} wins
 board.game.onturn=It's your turn
 board.game.waiting=Waiting for player {0}
 board.score=Score
+help=Help
+help.h=Welcome to Hexxagon!
+help.p1=Pick a piece you want to play with by clicking on it. You can now choose between the fields in the closest circle around the selected piece (bright yellow) and the fields forming a bigger circle around the closest one (orange). If you pick a bright yellow field, another piece of your colour is added there. If you choose one of the orange fields, the selected piece jumps there.
+help.p2=A piece in a new position changes the colour of all the opponent's pieces in the closest circle. The object of the game is to have more pieces on the game board after all the fields are taken. You also win in case that your opponent loses all of their pieces.
+help.p3=Good luck!

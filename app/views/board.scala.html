@@ -20,6 +20,7 @@
     }
 </p>
 }
+<a href="@routes.Application.help">@Messages("help")</a>
 <form class="board player_@user" id="board_form" action="@routes.Application.click(game.id)" method="post">
     <input type="hidden" name="x" value="-1" id="x">
     <input type="hidden" name="y" value="-1" id="y">
