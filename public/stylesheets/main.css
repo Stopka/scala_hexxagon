@@ -193,6 +193,8 @@ p.state.player_2{
     height: 400px;
     text-align: center;
     border: 2px outset;
+    color: #000000;
+    text-decoration: none;
 }
 
 .board_list a span{
@@ -216,8 +218,10 @@ p.state.player_2{
 
 .board_list a:hover{
     background:  linear-gradient(transparent, violet);
+    color: #ffffff;
 }
 
 .board_list a:hover span{
-    opacity: 1;
+    color: #ffffff;
+    background-color: darkmagenta;
 }
