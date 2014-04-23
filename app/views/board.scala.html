@@ -16,7 +16,7 @@
     @if(game.isOnTurn(user)){
     <em>@Messages("board.game.onturn")</em>
     }else{
-    <strong>@Messages("board.game.waiting")</strong>
+    <strong>@Messages("board.game.waiting",game.getPlays()+1)</strong>
     }
 </p>
 }
