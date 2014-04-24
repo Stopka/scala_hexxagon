@@ -6,7 +6,7 @@ import models.Field
   * Created by stopka on 20.4.14.
   */
 class Classic3 extends Map{
-     def getPlayerCount()=1
+     def getPlayerCount()=3
      protected def create()=Array.tabulate[Field](9,9){
        (x,y)=>{
          if(x+y<=3||x+y>=13||(x==4&&y==3)||(x==3&&y==5)||(x==5&&y==4)){
