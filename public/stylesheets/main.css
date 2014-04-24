@@ -44,6 +44,16 @@ h2{
     padding: 0 0;
 }
 
+h2.player_0{
+    color: blue;
+}
+h2.player_1{
+    color: red;
+}
+h2.player_2{
+    color: green;
+}
+
 p.state.player_0{
     color: blue;
 }
@@ -76,7 +86,7 @@ p.state.player_2{
     margin: 0 auto;
     padding: 0 21px 0 0;
     border: none;
-    display: inline-block;
+    display: block;
 }
 
 .board .row:nth-child(even){
