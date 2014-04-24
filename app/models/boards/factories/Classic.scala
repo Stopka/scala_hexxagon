@@ -12,4 +12,7 @@ object Classic extends Factory{
   def getName()={
     "Classic"
   }
+  def getImage()={
+    "0"
+  }
 }

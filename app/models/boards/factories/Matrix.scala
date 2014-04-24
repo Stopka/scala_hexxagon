@@ -12,4 +12,7 @@ object Matrix extends Factory{
    def getName()={
      "Matrix"
    }
+    def getImage()={
+      "2"
+    }
  }

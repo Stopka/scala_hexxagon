@@ -6,4 +6,5 @@ package models.boards.factories
 abstract class Factory {
   def apply():models.boards.maps.Map
   def getName():String
+  def getImage():String
 }

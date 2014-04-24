@@ -6,7 +6,7 @@
 <div class="board_list">
     @for((board,index)<-models.boards.Boards.factories.zipWithIndex){
     <a href="@routes.Application.start(index.toString)">
-        <img src="@routes.Assets.at("images/boards/"+index.toString+".png")"/>
+        <img src="@routes.Assets.at("images/boards/"+board.getImage()+".png")"/>
         <span>@board.getName()</span>
     </a>
     }

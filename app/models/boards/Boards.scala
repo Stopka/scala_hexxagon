@@ -6,7 +6,7 @@ import factories._
  * Created by stopka on 23.4.14.
  */
 object Boards {
-  val factories=Array[Factory](Classic)
+  val factories=Array[Factory](Classic,Bridge)
   def apply(index:Int)={
     factories(index)()
   }
