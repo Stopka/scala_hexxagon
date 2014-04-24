@@ -13,6 +13,9 @@ object Bridge extends Factory{
      "Bridge"
    }
    def getImage()={
-     "1"
+     "bridge"
    }
+  def getPlayers()={
+    "2"
+  }
  }

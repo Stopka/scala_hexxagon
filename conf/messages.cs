@@ -1,6 +1,7 @@
 title=Hexxagon
 index.header=Začít novou hru
 index.message=Vyber hrací desku ze seznamu níže a začni hrát.
+index.players={0} hráči
 invite.waiting=Čekám na další hráče...
 invite.message=Pozvi kamaráda nebo kamarádku do hry. Pošli níže uvedený odkaz.
 invite.connected=Připojení hráči

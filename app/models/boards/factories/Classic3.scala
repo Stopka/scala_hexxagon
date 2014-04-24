@@ -5,17 +5,17 @@ import models.boards.maps
 /**
  * Created by stopka on 23.4.14.
  */
-object Classic extends Factory{
+object Classic3 extends Factory{
   def apply()={
-    new maps.Classic()
+    new maps.Classic3()
   }
   def getName()={
-    "Classic"
+    "Classic3"
   }
   def getImage()={
-    "classic"
+    "classic3"
   }
   def getPlayers()={
-    "2"
+    "3"
   }
 }

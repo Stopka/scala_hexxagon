@@ -192,9 +192,13 @@ p.state.player_2{
     width: 400px;
     height: 400px;
     text-align: center;
-    border: 2px outset;
+    border: outset;
     color: #000000;
     text-decoration: none;
+}
+
+.board_list .players{
+    font-weight: normal;
 }
 
 .board_list a span{

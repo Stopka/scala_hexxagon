@@ -7,4 +7,5 @@ abstract class Factory {
   def apply():models.boards.maps.Map
   def getName():String
   def getImage():String
+  def getPlayers():String
 }

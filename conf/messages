@@ -1,6 +1,7 @@
 title=Hexxagon
 index.header=Start new game
 index.message=Select a board below to start game.
+index.players={0} players
 invite.waiting=Waiting for other players...
 invite.message=Invite a friend. Send the link below.
 invite.connected=Connected players
