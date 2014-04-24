@@ -89,12 +89,20 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
     }
   }
 
-  private def nextPlayer(){
+  private def nextPlayer(decrement:Int=getPlayersMax()){
     plays=(plays+1)%getPlayersMax()
+    if(!isPlayerMovable(plays)&&decrement>0){
+      nextPlayer(decrement-1)
+    }
   }
 
-  private def isPlayerMovable(player:Int){
-
+  private def isPlayerMovable(player:Int)={
+    val fields=board.getFields()
+    if(fields.count(field=>field!=null&&field.getPlayer()==player&&fields.filter(farFields(field.x,field.y)).count(field=>field.getPlayer()<0)>0)==0){
+      false
+    }else{
+      true
+    }
   }
 
   private def unselectAll(){
@@ -156,13 +164,13 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
   }
 
   def isOver()={
-    getLooser()>=0
+    board.getFields().count(field=>field!=null&&field.getPlayer()==(-1))==0
   }
 
+  @deprecated
   private def getLooser():Int={
     for(player<-0 to players.length-1){
-      val fields=board.getFields()
-      if(fields.count(field=>field!=null&&field.getPlayer()==player&&fields.filter(farFields(field.x,field.y)).count(field=>field.getPlayer()<0)>0)==0){
+      if(!isPlayerMovable(player)){
         return player;
       }
     }
