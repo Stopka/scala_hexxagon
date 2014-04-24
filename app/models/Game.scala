@@ -1,6 +1,7 @@
 package models
 
 import models.boards.Boards
+import scala.util.Sorting
 
 /**
  * Created by stopka on 7.4.14.
@@ -92,6 +93,10 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
     plays=(plays+1)%getPlayersMax()
   }
 
+  private def isPlayerMovable(player:Int){
+
+  }
+
   private def unselectAll(){
     selected=(-1,-1)
     for(field<-board.getFields().filter(field=>field!=null)){
@@ -165,18 +170,22 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
   }
 
   def getWinnerPlayer()={
-    if(getScore(0)==getScore(1)){
+    var list=Array[Tuple2[Int,Int]]();
+    for(i<-0 to getPlayersMax()-1){
+      list :+= Tuple2[Int,Int](i,getScore(i))
+    }
+    list=Sorting.stableSort(list,(a:Tuple2[Int,Int],b:Tuple2[Int,Int])=>a._2 > b._2)
+    if(list(0)._2==list(1)._2){
       (-1)
     }else{
-      if(getScore(0)>getScore(1)){
-        0
-      }else{
-        1
-      }
+      list(0)._1
     }
   }
 
-  def claimEnd()={
+  def claimEnd():Boolean={
+    if(getPlayersMax()>2){
+      return false;
+    }
     val looser=getLooser();
     if(looser>=0){
       plays=(-2);
