@@ -63,6 +63,23 @@ object Application extends Controller {
       }
   }
 
+  def addLocalPlayer(gameId:String) = Action {
+    request =>
+      request.session.get("user").map { user =>
+        try {
+          System.out.println("addLocalPlayer "+gameId+" "+user);
+          val game = models.Games(gameId)
+          game.addUser(user,false)
+          Redirect(routes.Application.invite(gameId)).withSession("user" -> user)
+        }catch{
+          case e:NoSuchElementException=>Redirect(routes.Application.index())
+        }
+      }.getOrElse {
+        val user=models.Users.add()
+        Redirect(routes.Application.invite(gameId)).withSession("user"->user)
+      }
+  }
+
   def board(gameId:String) = Action {
     request =>
       request.session.get("user").map { user =>
