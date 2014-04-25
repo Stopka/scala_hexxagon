@@ -1,10 +1,13 @@
 @(game: models.Game,user:String)
 
 @main(true) {
+    <h2>@Messages("invite.h")</h2>
 <div class="invite">
     <p><strong>@Messages("invite.waiting")</strong></p>
-    <p>@Messages("invite.message")</p>
+    <p class="state"><em>@Messages("invite.connected",game.countPlayers(),game.getPlayersMax())</em></p>
+    <p>@Messages("invite.p")</p>
+    <h3>@Messages("invite.invite.h")</h3>
+    <p>@Messages("invite.invite.p")</p>
     <code>http://hexxagon.skorpils.cz/game/@game.id</code>
-    <p><em>@Messages("invite.connected",game.countPlayers(),game.getPlayersMax())</em></p>
 </div>
 }

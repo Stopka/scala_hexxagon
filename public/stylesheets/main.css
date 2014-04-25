@@ -64,11 +64,15 @@ p.state.player_2{
     color: green;
 }
 
+.board{
+    text-align: center;
+}
+
 .board,.invite{
     background:  linear-gradient(transparent, darkgray);
     border: 3px outset;
     padding: 10px 10px;
-    text-align: center;
+
     min-width: 780px;
 }
 
