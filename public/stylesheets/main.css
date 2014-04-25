@@ -138,7 +138,7 @@ p.state.player_2{
     background-color: green;
 }
 
-.board .field.selected{
+.board .field.selected,.board .field.from{
     border-color: white;
 }
 
@@ -148,6 +148,10 @@ p.state.player_2{
 
 .board .field.jump{
     border-color: orange;
+}
+
+.board .field.to{
+    border-color: gold;
 }
 
 .board a:hover{

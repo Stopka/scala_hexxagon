@@ -65,6 +65,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
      if(!isOnTurn(player)){
        return
      }
+    unmarkPost()
     try {
       val field = board(x,y)
       if(field.getPlayer()==player) {
@@ -94,10 +95,23 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
 
   private def doRest(x:Int,y:Int){
     claim(x,y)
+    val (a,b)=selected
     unselectAll()
+    markPost(a,b,x,y)
     if(!claimEnd()){
       nextPlayer()
       tryAI()
+    }
+  }
+
+  private def markPost(a:Int,b:Int,x:Int,y:Int){
+    board(a,b).markFrom()
+    board(x,y).markTo()
+  }
+
+  private def unmarkPost(){
+    for(field<-board.getFields().filter(field=>field.isPostmarked())){
+      field.removeMarks()
     }
   }
 

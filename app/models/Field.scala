@@ -48,4 +48,16 @@ class Field(val x:Int,val y:Int,var player:Int) {
   def markJump()={
     mark=3
   }
+
+  def markFrom(){
+    mark=4
+  }
+
+  def markTo(){
+    mark=5
+  }
+
+  def isPostmarked()={
+    mark==4||mark==5
+  }
 }
