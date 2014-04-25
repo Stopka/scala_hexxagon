@@ -19,8 +19,8 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
     players.indexOf(user)
   }
 
-  def addUser(player:String)={
-   if(players.count(p=>p.equals(player))==0&&players.count(p=>true)<getPlayersMax()){
+  def addUser(player:String,control:Boolean=true)={
+   if(players.count(p=>p.equals(player))==0&&players.count(p=>true)<getPlayersMax()||(!control)){
       players=players:+player
     }
   }

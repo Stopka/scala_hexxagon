@@ -4,7 +4,7 @@
 <div class="invite">
     <p><strong>@Messages("invite.waiting")</strong></p>
     <p>@Messages("invite.message")</p>
-    <code>http://skorpils.cz:9000/game/@game.id</code>
-    <p><em>@Messages("invite.connected"): @game.countPlayers() / @game.getPlayersMax()</em></p>
+    <code>http://hexxagon.skorpils.cz/game/@game.id</code>
+    <p><em>@Messages("invite.connected",game.countPlayers(),game.getPlayersMax())</em></p>
 </div>
 }

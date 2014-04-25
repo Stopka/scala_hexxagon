@@ -101,7 +101,7 @@
     <span>@Messages("board.score"): </span>
     <div class="bar_frame">
         @for(player<-0 to game.getPlayersMax()-1){
-        <div class="bar player_@player" style="width: @{(100*game.getScore(player))/(game.getScore()+2)}%">@{player+1}=@game.getScore(player)</div>
+        <div class="bar player_@player" style="width: @{(100*game.getScore(player))/(game.getScore()+2)}%">@Messages("board.score.player",player+1,game.getScore(player))</div>
         }
-        <div class="bar" style="width: @{(100*game.getScore(-1))/(game.getScore()+2)}%">?=@game.getScore(-1)</div></div></div>
+        <div class="bar" style="width: @{(100*game.getScore(-1))/(game.getScore()+2)}%">@Messages("board.score.rest",game.getScore(-1))</div></div></div>
 }
