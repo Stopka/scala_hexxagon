@@ -104,7 +104,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
   private def tryAI(){
     val aiId=players(getPlays());
     if(AIs.exists(aiId)) {
-      AIs(players(getPlays()))(this)
+      AIs(players(getPlays()),this)
     }
   }
 
