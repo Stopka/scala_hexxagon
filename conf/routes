@@ -9,6 +9,7 @@ GET     /start/:id                          controllers.Application.start(id)
 
 GET     /game/:id                          controllers.Application.invite(id)
 GET     /game/:id/addLocal                          controllers.Application.addLocalPlayer(id)
+GET     /game/:id/addAI                          controllers.Application.addAIPlayer(id)
 
 GET     /game/:id/board                          controllers.Application.board(id)
 POST     /game/:id/board/click                          controllers.Application.click(id)

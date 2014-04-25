@@ -2,11 +2,13 @@ package models
 
 import models.boards.Boards
 import scala.util.Sorting
+import models.ais.AIs
+import models.boards.maps.FilterFieldRange
 
 /**
  * Created by stopka on 7.4.14.
  */
-case class Game(val id:String,player1:String,val board_index:Int=0){
+case class Game(val id:String,player1:String,val board_index:Int=0)extends FilterFieldRange{
   var players: Array[String] = Array(player1)
   var plays=0;
   //val player_limit=2;
@@ -51,7 +53,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
   }
 
   def getBoard()={
-    board.getFieldArray();
+    board;
   }
 
   def isOnTurn(player:Int)={
@@ -77,24 +79,32 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
           case 1=>unselectAll()
           case 2=>{
             split(x,y)
-            claim(x,y)
-            if(!claimEnd()){
-              nextPlayer()
-            }
-            unselectAll()
+            doRest(x,y)
           }
           case 3=>{
             jump(x,y)
-            claim(x,y)
-            if(!claimEnd()){
-              nextPlayer()
-            }
-            unselectAll()
+            doRest(x,y)
           }
         }
       }
     }catch {
       case e:ArrayIndexOutOfBoundsException=>unselectAll()
+    }
+  }
+
+  private def doRest(x:Int,y:Int){
+    claim(x,y)
+    unselectAll()
+    if(!claimEnd()){
+      nextPlayer()
+      tryAI()
+    }
+  }
+
+  private def tryAI(){
+    val aiId=players(getPlays());
+    if(AIs.exists(aiId)) {
+      AIs(players(getPlays()))(this)
     }
   }
 
@@ -107,7 +117,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
 
   private def isPlayerMovable(player:Int)={
     val fields=board.getFields()
-    if(fields.count(field=>field!=null&&field.getPlayer()==player&&fields.filter(farFields(field.x,field.y)).count(field=>field.getPlayer()<0)>0)==0){
+    if(fields.count(field=>field.getPlayer()==player&&fields.filter(farFields(field.x,field.y)).count(field=>field.getPlayer()<0)>0)==0){
       false
     }else{
       true
@@ -116,7 +126,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
 
   private def unselectAll(){
     selected=(-1,-1)
-    for(field<-board.getFields().filter(field=>field!=null)){
+    for(field<-board.getFields()){
       field.removeMarks()
     }
   }
@@ -143,37 +153,21 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
 
   private def select(x:Int,y:Int){
     selected=(x,y)
-    for(field<-board.getFields().filter(farFields(x,y))){
-      if(field.getPlayer()<0) {
-        field.markJump()
-      }
+    for(field<-board.getFarFields(x,y).filter(field=>field.getPlayer()<0)){
+      field.markJump()
     }
-    for(field<-board.getFields().filter(nearFields(x,y))){
-      if(field.getPlayer()<0) {
-        field.markSplit()
-      }
+    for(field<-board.getNearFields(x,y).filter(field=>field.getPlayer()<0)){
+      field.markSplit()
     }
     board(x,y).select();
   }
 
-  private def nearFields(x:Int,y:Int)={
-    field:Field=>field!=null&&Math.abs(x-field.x)<=1&&Math.abs(y-field.y)<=1&&Math.abs((y-field.y)+(x-field.x))!=2
-  }
-
-  private def farFields(x:Int,y:Int)={
-    field:Field=>field!=null&&((Math.abs(x-field.x)<=1&&Math.abs(y-field.y)<=1&&Math.abs((y-field.y)+(x-field.x))==2)||(Math.abs(x-1-field.x)<=1&&Math.abs(y+1-field.y)<=1)||(Math.abs(x+1-field.x)<=1&&Math.abs(y-1-field.y)<=1))
-  }
-
   def getScore(player:Int=(-2))={
-    if(player==(-2)){
-      board.getFields().count(field=>field!=null)
-    }else{
-      board.getFields().count(field=>field!=null&&field.getPlayer()==player)
-    }
+    board.countPlayerFields(player)
   }
 
   def isOver()={
-    board.getFields().count(field=>field!=null&&field.getPlayer()==(-1))==0
+    board.getFields().count(field=>field.getPlayer()==(-1))==0
   }
 
   @deprecated
@@ -201,7 +195,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
 
   def claimEnd():Boolean={
     if(getPlayersMax()>2){
-      return false;
+      return isOver();
     }
     val looser=getLooser();
     if(looser>=0){

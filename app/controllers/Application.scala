@@ -78,6 +78,22 @@ object Application extends Controller {
       }
   }
 
+  def addAIPlayer(gameId:String) = Action {
+    request =>
+      request.session.get("user").map { user =>
+        try {
+          System.out.println("addAIPlayer "+gameId+" "+user);
+          val game = models.Games(gameId)
+          game.addUser("AI",false)
+          Redirect(routes.Application.invite(gameId))
+        }catch{
+          case e:NoSuchElementException=>Redirect(routes.Application.index())
+        }
+      }.getOrElse {
+        Redirect(routes.Application.index())
+      }
+  }
+
   def board(gameId:String) = Action {
     request =>
       request.session.get("user").map { user =>
