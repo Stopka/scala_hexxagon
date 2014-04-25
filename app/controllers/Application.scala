@@ -31,13 +31,12 @@ object Application extends Controller {
         try {
           System.out.println("Start "+boardId+" "+user);
           val id=models.Games.add(user,Integer.parseInt(boardId))
-          Redirect(routes.Application.invite(id)).withSession("user" -> user)
+          Redirect(routes.Application.invite(id))
         }catch{
           case e:NoSuchElementException=>Redirect(routes.Application.index())
         }
       }.getOrElse {
-        val user=models.Users.add()
-        Redirect(routes.Application.index).withSession("user"->user)
+        Redirect(routes.Application.index)
       }
   }
 
@@ -50,7 +49,7 @@ object Application extends Controller {
           game.addUser(user)
 
           if (game.arePlayersReady()) {
-            Redirect(routes.Application.board(gameId)).withSession("user" -> user)
+            Redirect(routes.Application.board(gameId))
           } else {
             Ok(views.html.invite(game, user))
           }
@@ -70,13 +69,12 @@ object Application extends Controller {
           System.out.println("addLocalPlayer "+gameId+" "+user);
           val game = models.Games(gameId)
           game.addUser(user,false)
-          Redirect(routes.Application.invite(gameId)).withSession("user" -> user)
+          Redirect(routes.Application.invite(gameId))
         }catch{
           case e:NoSuchElementException=>Redirect(routes.Application.index())
         }
       }.getOrElse {
-        val user=models.Users.add()
-        Redirect(routes.Application.invite(gameId)).withSession("user"->user)
+        Redirect(routes.Application.index())
       }
   }
 
@@ -111,7 +109,7 @@ object Application extends Controller {
             val (x, y)=coordinates.bindFromRequest.get
             System.out.println("Click "+gameId+" "+x+","+y+" "+user);
             game.click(user,x,y)
-            Redirect(routes.Application.board(gameId)).withSession("user" -> user)
+            Redirect(routes.Application.board(gameId))
           }catch{
             case e:NoSuchElementException=>Redirect(routes.Application.index())
           }

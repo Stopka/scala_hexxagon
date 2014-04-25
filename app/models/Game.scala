@@ -16,7 +16,11 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
     plays
   }
   def getPlayerNumber(user:String)={
-    players.indexOf(user)
+    if(isUserPlaying(user)){
+      getPlays()
+    }else{
+      players.indexOf(user)
+    }
   }
 
   def addUser(player:String,control:Boolean=true)={
@@ -26,7 +30,12 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
   }
 
   def isUserPlaying(user:String)={
-    players(plays)==user
+    val p=getPlays()
+    if(p<0){
+      false
+    }else{
+      players(getPlays())==user
+    }
   }
 
   def arePlayersReady()={
@@ -46,7 +55,7 @@ case class Game(val id:String,player1:String,val board_index:Int=0){
   }
 
   def isOnTurn(player:Int)={
-    plays==player
+    getPlays()==player
   }
 
   def click(user:String,x:Int,y:Int){
