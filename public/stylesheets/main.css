@@ -171,6 +171,7 @@ p.state.player_2{
     height: 20px;
     font-weight: bold;
     box-sizing: content-box;
+    text-align: center;
 }
 
 .score .bar{
