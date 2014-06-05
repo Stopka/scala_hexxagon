@@ -28,16 +28,17 @@ abstract class Map extends FilterFieldRange{
       }
     }
 
-    def apply(x:Int,y:Int)={
+    def apply(point:(Int,Int))={
+      val (x,y)=point;
       board(x)(y)
     }
 
-    def getNearFields(x:Int,y:Int)={
-      getFields().filter(nearFields(x,y))
+    def getNearFields(point: (Int,Int))={
+      getFields().filter(nearFields(point))
     }
 
-  def getFarFields(x:Int,y:Int)={
-    getFields().filter(farFields(x,y))
+  def getFarFields(point: (Int,Int))={
+    getFields().filter(farFields(point))
   }
 
   def countPlayerFields(player:Int=(-2))={

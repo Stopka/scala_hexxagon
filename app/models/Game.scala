@@ -60,31 +60,31 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
     getPlays()==player
   }
 
-  def click(user:String,x:Int,y:Int){
+  def click(user:String,point:(Int,Int)){
     val player=getPlayerNumber(user)
      if(!isOnTurn(player)){
        return
      }
     unmarkPost()
     try {
-      val field = board(x,y)
+      val field = board(point)
       if(field.getPlayer()==player) {
         val sel = field.isSelected()
         unselectAll()
         if (!sel) {
-          select(x, y)
+          select(point)
         }
       }else{
         field.getMark() match{
           case 0=>unselectAll()
           case 1=>unselectAll()
           case 2=>{
-            split(x,y)
-            doRest(x,y)
+            split(point)
+            doRest(point)
           }
           case 3=>{
-            jump(x,y)
-            doRest(x,y)
+            jump(point)
+            doRest(point)
           }
         }
       }
@@ -93,26 +93,26 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
     }
   }
 
-  private def doRest(x:Int,y:Int){
-    claim(x,y)
-    val (a,b)=selected
+  private def doRest(point: (Int,Int)){
+    val selectedPoint=selected
+    claim(point)
     unselectAll()
-    markPost(a,b,x,y)
+    markPost(selectedPoint,point)
     if(!claimEnd()){
       nextPlayer()
       tryAI()
     }
   }
 
-  private def markPost(a:Int,b:Int,x:Int,y:Int){
-    board(a,b).markFrom()
-    board(x,y).markTo()
+  private def markPost(from: (Int,Int),to: (Int,Int)){
+    board(from).markFrom()
+    board(to).markTo()
   }
 
   private def unmarkPost(){
-    for(field<-board.getFields().filter(field=>field.isPostmarked())){
-      field.removeMarks()
-    }
+    board.getFields().filter(field=>field.isPostmarked()).foreach(
+      field=>field.removeMarks()
+    )
   }
 
   private def tryAI(){
@@ -131,49 +131,43 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
 
   private def isPlayerMovable(player:Int)={
     val fields=board.getFields()
-    if(fields.count(field=>field.getPlayer()==player&&fields.filter(farFields(field.x,field.y)).count(field=>field.getPlayer()<0)>0)==0){
-      false
-    }else{
-      true
-    }
+    !(fields.count(field=>field.getPlayer()==player&&fields.filter(farFields(field.x,field.y)).count(field=>field.getPlayer()<0)>0)==0)
   }
 
   private def unselectAll(){
     selected=(-1,-1)
-    for(field<-board.getFields()){
-      field.removeMarks()
-    }
+    board.getFields().foreach(field=>field.removeMarks())
   }
 
-  private def split(x:Int,y:Int){
-    val from=board(selected._1,selected._2)
-    board(x,y).setPlayer(from.getPlayer())
+  private def split(to: (Int,Int)){
+    val from=board(selected)
+    board(to).setPlayer(from.getPlayer())
   }
 
-  private def jump(x:Int,y:Int){
-    var from=board(selected._1,selected._2)
-    board(x,y).setPlayer(from.getPlayer())
+  private def jump(to: (Int,Int)){
+    var from=board(selected)
+    board(to).setPlayer(from.getPlayer())
     from.setPlayer()
   }
 
-  private def claim(x:Int,y:Int){
-    val from=board(x,y)
-    for(field<-board.getFields().filter(nearFields(x,y))){
+  private def claim(point: (Int,Int)){
+    val from=board(point)
+    board.getFields().filter(nearFields(point)).foreach(field=>{
       if(field.getPlayer()>=0){
         field.setPlayer(from.getPlayer());
       }
-    }
+    })
   }
 
-  private def select(x:Int,y:Int){
-    selected=(x,y)
-    for(field<-board.getFarFields(x,y).filter(field=>field.getPlayer()<0)){
-      field.markJump()
-    }
-    for(field<-board.getNearFields(x,y).filter(field=>field.getPlayer()<0)){
-      field.markSplit()
-    }
-    board(x,y).select();
+  private def select(point:(Int,Int)){
+    selected=point
+    board.getFarFields(point).filter(field=>field.getPlayer()<0).foreach(
+      field=>field.markJump()
+    )
+    board.getNearFields(point).filter(field=>field.getPlayer()<0).foreach(
+      field=>field.markSplit()
+    )
+    board(point).select();
   }
 
   def getScore(player:Int=(-2))={
@@ -195,11 +189,11 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
   }
 
   def getWinnerPlayer()={
-    var list=Array[Tuple2[Int,Int]]();
+    var list=Array[(Int,Int)]();
     for(i<-0 to getPlayersMax()-1){
-      list :+= Tuple2[Int,Int](i,getScore(i))
+      list :+= (i,getScore(i))
     }
-    list=Sorting.stableSort(list,(a:Tuple2[Int,Int],b:Tuple2[Int,Int])=>a._2 > b._2)
+    Sorting.stableSort(list,(a:(Int,Int),b:(Int,Int))=>(a._2 > b._2));
     if(list(0)._2==list(1)._2){
       (-1)
     }else{
@@ -214,9 +208,9 @@ case class Game(val id:String,player1:String,val board_index:Int=0)extends Filte
     val looser=getLooser();
     if(looser>=0){
       plays=(-2);
-      for(field<-board.getFields().filter(field=>field!=null&&field.getPlayer()<0)){
-        field.setPlayer((looser+1)%getPlayersMax())
-      }
+      board.getFields().filter(field=>field!=null&&field.getPlayer()<0).foreach(
+        field=>field.setPlayer((looser+1)%getPlayersMax())
+      )
     }
     looser>=0
   }

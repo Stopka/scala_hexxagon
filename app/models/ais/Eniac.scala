@@ -17,9 +17,8 @@ object Eniac extends AI{
   protected def evaluateMoves(board:Map,moves:Array[((Int,Int),(Int,Int))],player:Int,jump:Boolean)={
     for(move<-moves) yield {
       val (from,to)=move
-      val (x,y)=to
       val point=if(jump){0}else{1}
-      val metric=point+2*board.getNearFields(x,y).count(field=>field.getPlayer()>=0&&field.getPlayer()!=player)
+      val metric=point+2*board.getNearFields(to).count(field=>field.getPlayer()>=0&&field.getPlayer()!=player)
       (metric,move)
     }
   }

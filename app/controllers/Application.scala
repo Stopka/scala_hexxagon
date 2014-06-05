@@ -122,9 +122,10 @@ object Application extends Controller {
         user =>
           try {
             val game = models.Games(gameId)
-            val (x, y)=coordinates.bindFromRequest.get
-            System.out.println("Click "+gameId+" "+x+","+y+" "+user);
-            game.click(user,x,y)
+            val (x,y)=coordinates.bindFromRequest.get
+            val point=(x,y);
+            System.out.println("Click "+gameId+" "+point+" "+user);
+            game.click(user,point)
             Redirect(routes.Application.board(gameId))
           }catch{
             case e:NoSuchElementException=>Redirect(routes.Application.index())

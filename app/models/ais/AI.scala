@@ -12,8 +12,8 @@ abstract class AI  extends FilterFieldRange {
 
   def apply(name:String,game:Game)={
     val (from,to)=findMove(game)
-    game.click(name,from._1,from._2)
-    game.click(name,to._1,to._2)
+    game.click(name,from)
+    game.click(name,to)
   }
 
   private def findMove(game:Game)={
@@ -39,10 +39,11 @@ abstract class AI  extends FilterFieldRange {
   }
 
   private def splits(board:Map,from:(Int,Int))={
-    board.getNearFields(from._1,from._2).filter(field=>field.getPlayer()==(-1)&&field.x!=from._1&&field.y!=from._2)
+    val (x,y)=from
+    board.getNearFields(from).filter(field=>field.getPlayer()==(-1)&&field.x!=x&&field.y!=y)
   }
 
   private def jumps(board:Map,from:(Int,Int))={
-    board.getFarFields(from._1,from._2).filterNot(nearFields(from._1,from._2)).filter(field=>field.getPlayer()==(-1))
+    board.getFarFields(from).filterNot(nearFields(from)).filter(field=>field.getPlayer()==(-1))
   }
 }
